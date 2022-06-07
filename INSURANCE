@@ -1,0 +1,25 @@
+create database insurance030;
+USE insurance030;
+create table PERSON( driver_id char(10), Name char(20), address char(20), primary key(driver_id));
+desc PERSON;
+
+CREATE table CAR( Regno varchar(20), model varchar(20),  year int, primary key(Regno));
+create table ACCIDENT( report_number int, date date, location varchar(20), primary key(report_number));
+create table OWNS(driver_id char(10), Regno varchar(20), primary key(Regno),
+foreign key(driver_id) references PERSON(driver_id),
+foreign key(Regno) references CAR(Regno)
+);
+desc OWNS;
+create table PARTICIPATED( driver_id varchar(20), Regno varchar(20), report_number int, damage_amount int);
+alter table PARTICIPATED add primary key(report_number);
+alter table PARTICIPATED add foreign key(report_number) references ACCIDENT(report_number);
+alter table PARTICIPATED add foreign key(driver_id) references PERSON(driver_id);
+alter table PARTICIPATED add foreign key(Regno) references CAR(Regno);
+desc PARTICIPATED;
+ALTER TABLE OWNS drop foreign key owns_ibfk_2;
+alter table OWNS drop primary key;
+ALTER table OWNS ADD primary key(driver_id, Regno);
+
+insert into PERSON( driver_id, Name, address) values
+( '100', 'BGY', 'BANGLORE'),('101' , 'AMAY', 'BANGLORE'), ('103', 'APPU', 'BANGLORE');
+SELECT * from PERSON;
